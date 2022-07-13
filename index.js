@@ -30,9 +30,13 @@ async function run() {
     // add product to database
     app.post("/addinventory", async (req, res) => {
       const data = req.body;
-      console.log(data);
+      const result = await dbCollection.insertOne(data);
+      res.send("data paisi res e");
+      console.log(result, "gese data all");
     });
     // add product to database end
+
+    app.get("/inventory", async (req, res) => {});
   } finally {
   }
 }
