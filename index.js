@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,7 +36,26 @@ async function run() {
     });
     // add product to database end
 
-    app.get("/inventory", async (req, res) => {});
+    // show product to ui
+    app.get("/inventory", async (req, res) => {
+      const query = {};
+      const cursor = dbCollection.find(query);
+      const data = await cursor.toArray();
+      res.send(data);
+    });
+    //  show product to ui
+
+    app.delete("/inventory/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await dbCollection.deleteOne(query);
+      if (result.deletedCount === 1) {
+        console.log("Successfully deleted one document.");
+      } else {
+        console.log("No documents matched the query. Deleted 0 documents.");
+      }
+      res.send("DELETED");
+    });
   } finally {
   }
 }
