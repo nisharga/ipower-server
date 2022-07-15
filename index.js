@@ -45,6 +45,40 @@ async function run() {
     });
     //  show product to ui
 
+    // show product to single product
+    app.get("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const cursor = dbCollection.find(query);
+      const data = await cursor.toArray();
+      res.send(data);
+    });
+    //  show product to single product
+
+    // show product to myitems
+    app.get("/myitems/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { email: id };
+      const cursor = dbCollection.find(query);
+      const data = await cursor.toArray();
+      res.send(data);
+    });
+    //  show product to myitems
+
+    app.put("/product/:id/quantity", async (req, res) => {
+      const data = req.body;
+      const id = req.params.id;
+      // const filter = { _id: ObjectId(id) };
+      // const options = { upsert: true };
+      // const result = await dbCollection.updateOne(
+      //   filter,
+      //   { $set: { quantity: data.quantity + 1 } },
+      //   options
+      // );
+      // res.send(data);
+      res.send(id);
+    });
+
     app.delete("/inventory/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
