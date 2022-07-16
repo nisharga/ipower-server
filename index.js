@@ -47,7 +47,7 @@ async function run() {
       const data = await cursor.toArray();
       res.send(data);
     });
-    //  show all product to ui inventory page
+    //  show all product to ui inventory page end
 
     // show product to single product
     app.get("/product/:id", async (req, res) => {
@@ -59,7 +59,7 @@ async function run() {
     });
     //  show product to single product
 
-    // show product to myitems
+    // find user detils by email-address
     app.get("/myitems/:id", async (req, res) => {
       const id = req.params.id;
       const query = { email: id };
@@ -67,9 +67,9 @@ async function run() {
       const data = await cursor.toArray();
       res.send(data);
     });
-    //  show product to myitems
+    //  find user detils by email-address end
 
-    // delet product to myitems
+    // delet a product by _id
     app.delete("/myitems/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -79,7 +79,7 @@ async function run() {
       }
       res.send(result);
     });
-    // delet product to myitems
+    // delet a product by _id
 
     app.put("/product/:id", async (req, res) => {
       const quantity = req.body.quantity;
