@@ -81,6 +81,7 @@ async function run() {
     });
     // delet a product by _id
 
+    // update a field by id
     app.put("/product/:id", async (req, res) => {
       const quantity = req.body.quantity;
       const id = req.params.id;
@@ -92,10 +93,10 @@ async function run() {
         options
       );
       res.send(result);
-      // console.log(quantity);
-      // res.send(quantity);
     });
+    // update a field by id
 
+    // update a field by id
     app.put("/product/minusquantity/:id", async (req, res) => {
       const quantity = req.body.quantity;
       const id = req.params.id;
@@ -108,7 +109,9 @@ async function run() {
       );
       res.send(result);
     });
+    // update a field by id
 
+    // delet a field by id
     app.delete("/inventory/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -120,7 +123,9 @@ async function run() {
       }
       res.send("DELETED");
     });
+    // delet a field by id
   } finally {
+    //        await client.close()
   }
 }
 run().catch(console.dir);
