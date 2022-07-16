@@ -65,18 +65,44 @@ async function run() {
     });
     //  show product to myitems
 
-    app.put("/product/:id/quantity", async (req, res) => {
-      const data = req.body;
+    // delet product to myitems
+    app.delete("/myitems/:id", async (req, res) => {
       const id = req.params.id;
-      // const filter = { _id: ObjectId(id) };
-      // const options = { upsert: true };
-      // const result = await dbCollection.updateOne(
-      //   filter,
-      //   { $set: { quantity: data.quantity + 1 } },
-      //   options
-      // );
-      // res.send(data);
-      res.send(id);
+      const query = { _id: ObjectId(id) };
+      const result = await dbCollection.deleteOne(query);
+      if (result.deletedCount === 1) {
+        console.log("Sucessfully deleted ");
+      }
+      res.send(result);
+    });
+    // delet product to myitems
+
+    app.put("/product/:id", async (req, res) => {
+      const quantity = req.body.quantity;
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const result = await dbCollection.updateOne(
+        filter,
+        { $set: { quantity: quantity } },
+        options
+      );
+      res.send(result);
+      // console.log(quantity);
+      // res.send(quantity);
+    });
+
+    app.put("/product/minusquantity/:id", async (req, res) => {
+      const quantity = req.body.quantity;
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const result = await dbCollection.updateOne(
+        filter,
+        { $set: { quantity: quantity } },
+        options
+      );
+      res.send(result);
     });
 
     app.delete("/inventory/:id", async (req, res) => {
