@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config();
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -14,12 +13,17 @@ app.get("/", (req, res) => {
   res.send("xc not love u");
 });
 
+// Basic setup Done
+
+// MongoDB Setup
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qemdz.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
+// MongoDB Setup
 
 async function run() {
   try {
@@ -27,23 +31,23 @@ async function run() {
     const dbCollection = client.db("ipower").collection("product");
     console.log("Setup done");
 
-    // add product to database
+    // insertOne product to database
     app.post("/addinventory", async (req, res) => {
       const data = req.body;
       const result = await dbCollection.insertOne(data);
       res.send("data paisi res e");
       console.log(result, "gese data all");
     });
-    // add product to database end
+    // insertOne product to database end
 
-    // show product to ui
+    // show all product to ui(inventory page)
     app.get("/inventory", async (req, res) => {
       const query = {};
       const cursor = dbCollection.find(query);
       const data = await cursor.toArray();
       res.send(data);
     });
-    //  show product to ui
+    //  show all product to ui inventory page
 
     // show product to single product
     app.get("/product/:id", async (req, res) => {
